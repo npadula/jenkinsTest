@@ -8,7 +8,7 @@ pipeline {
     }
     stage('test') {
       steps {
-        powershell(returnStatus: true, returnStdout: true, script: 'Write-Output "test"')
+        powershell(returnStdout: true, script: 'Write-Output "test"')
       }
     }
   }
