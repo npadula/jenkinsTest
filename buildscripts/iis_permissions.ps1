@@ -26,4 +26,4 @@ Set-Acl $path $pathAcl
 Write-Output "Setting web.config permissions..."
 $webConfig = "$($DeployDir)\web.config"
 SetIisPermissions $DeployDir
-SetIisPermissions $webConfig
+#SetIisPermissions $webConfig
