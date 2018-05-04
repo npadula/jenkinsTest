@@ -1,0 +1,89 @@
+pipeline {
+agent any
+triggers { pollSCM('*/5 * * * *') }
+stages{
+    stage('Clean Workspace'){
+        steps{
+            powershell 'Remove-Item -path . -Recurse'
+        }
+    }
+    
+    stage('Fetch'){
+		steps{
+        checkout([$class: 'GitSCM', branches: [[name: '*/master']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: 'a65bd883-dc29-4cbd-9d92-2d7265ca5b41', url: 'https://github.com/npadula/jenkinsTest']]])
+		}
+
+    }
+	
+	stage('NPM Restore'){
+	   steps{
+	       powershell script: '.\\buildscripts\\npm_restore.ps1'
+	   }
+	    
+	}
+	
+	stage('Stop IIS Site'){
+	   steps{
+	       powershell script: '.\\buildscripts\\remove_site.ps1'
+	   }
+	    
+	}
+	
+	stage('dotnet publish'){
+	   steps{
+	       powershell script: '.\\buildscripts\\dotnet_publish.ps1'
+	   }
+	    
+	}
+	
+	stage('Assign IIS Permissions '){
+	   steps{
+	       powershell script: '.\\buildscripts\\iis_permissions.ps1'
+	   }
+	    
+	}
+	
+	stage('Start IIS Site'){
+	   steps{
+	       powershell script: '.\\buildscripts\\start_site.ps1'
+	   }
+	    
+	}
+	
+	stage('Run Tests'){
+	   steps{
+	       powershell script: '.\\buildscripts\\run_tests.ps1'
+	   }
+	   
+	    
+	}
+
+	
+
+}
+
+
+	
+	 post {
+        always {
+
+       step([
+            $class : 'XUnitPublisher',
+            thresholdMode: 1,
+            thresholds: [
+                // TODO: what is skipped?
+                [$class: 'FailedThreshold', failureNewThreshold: '', failureThreshold: '', unstableNewThreshold: '', unstableThreshold: '0'],
+                [$class: 'SkippedThreshold', failureNewThreshold: '', failureThreshold: '', unstableNewThreshold: '', unstableThreshold: '']
+            ],
+            tools : [[
+                $class: 'MSTestJunitHudsonTestType',
+                deleteOutputFiles: true,
+                failIfNotNew: false,
+                pattern: "\\TestResults\\*.trx",
+                skipNoTestFiles: false,
+                stopProcessingIfError: true
+            ]]
+        ])
+    }
+}
+}
