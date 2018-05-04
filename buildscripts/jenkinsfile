@@ -67,9 +67,9 @@ stages{
 	 post {
         always {
 		
-				    def returned = powershell(returnStdout: true, script: 'Write-Output "PowerShell is mighty!"')
+				    powershell(returnStdout: false, script: 'Write-Output "PowerShell is mighty!"')
 					 
-					 println returned
+					 
 
 		   
        step([
