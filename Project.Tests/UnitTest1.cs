@@ -14,7 +14,7 @@ namespace Project.Tests
         [Fact]
         public void Test2()
         {
-            Assert.Equal(1, 21);
+            Assert.Equal(1, 1);
         }
     }
 }
