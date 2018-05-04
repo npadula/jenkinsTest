@@ -67,7 +67,7 @@ stages{
 	 post {
         always {
 		
-				    powershell(returnStdout: false, script: 'Write-Output "PowerShell is mighty!"')
+				    powershell(returnStdout: false, script: 'Write-Output "Executing Post-Build actions [ALWAYS]"')
 					 
 					 
 
@@ -89,6 +89,9 @@ stages{
                 stopProcessingIfError: true
             ]]
         ])
+		
+		
+		powershell(returnStdout: false, script: '.\\buildscripts\\post_always.ps1')
 		
 		
 		
