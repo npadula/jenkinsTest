@@ -66,8 +66,8 @@ stages{
 	
 	 post {
         always {
-			steps{
-				powershell  'Write-Output "test"'
+		
+				powershell(returnStdout: true, script: 'Write-Output "PowerShell is mighty!"')
 		   
        step([
             $class : 'XUnitPublisher',
@@ -86,7 +86,7 @@ stages{
                 stopProcessingIfError: true
             ]]
         ])
-		}
+		
 		
 		
     }
