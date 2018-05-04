@@ -91,7 +91,7 @@ stages{
         ])
 		
 		
-		powershell script: '.\\buildscripts\\post_always.ps1'
+		powershell 'Convert-Path .'
 		
 		
 		
