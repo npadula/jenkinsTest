@@ -66,10 +66,9 @@ stages{
 	
 	 post {
         always {
-			steps{
-	       powershell  'Write-Output "test"'
-
-			}
+			step(
+				powershell  'Write-Output "test"'
+		   )
        step([
             $class : 'XUnitPublisher',
             thresholdMode: 1,
