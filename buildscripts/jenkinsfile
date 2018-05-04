@@ -66,9 +66,9 @@ stages{
 	
 	 post {
         always {
-			step(
+			steps{
 				powershell  'Write-Output "test"'
-		   )
+		   
        step([
             $class : 'XUnitPublisher',
             thresholdMode: 1,
@@ -86,8 +86,9 @@ stages{
                 stopProcessingIfError: true
             ]]
         ])
+		}
 		
-		step
+		
     }
 }
 }
