@@ -67,7 +67,10 @@ stages{
 	 post {
         always {
 		
-				powershell(returnStdout: true, script: 'Write-Output "PowerShell is mighty!"')
+				    def returned = powershell(returnStdout: true, script: 'Write-Output "PowerShell is mighty!"')
+					 
+					 println returned
+
 		   
        step([
             $class : 'XUnitPublisher',
