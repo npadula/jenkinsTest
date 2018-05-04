@@ -91,7 +91,7 @@ stages{
         ])
 		
 		
-		powershell(returnStdout: false, script: '.\\buildscripts\\post_always.ps1')
+		powershell script: '.\\buildscripts\\post_always.ps1'
 		
 		
 		
