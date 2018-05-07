@@ -22,6 +22,21 @@ stages{
 	    
 	}
 	
+	stage('Build'){
+	   steps{
+	       powershell script: '.\\buildscripts\\dotnet_publish.ps1'
+	   }
+	    
+	}
+	
+	stage('Run Tests'){
+	   steps{
+	       powershell script: '.\\buildscripts\\run_tests.ps1'
+	   }
+	   
+	    
+	}
+	
 	stage('Stop IIS Site'){
 	   steps{
 	       powershell script: '.\\buildscripts\\remove_site.ps1'
@@ -29,12 +44,7 @@ stages{
 	    
 	}
 	
-	stage('dotnet publish'){
-	   steps{
-	       powershell script: '.\\buildscripts\\dotnet_publish.ps1'
-	   }
-	    
-	}
+
 	
 	stage('Assign IIS Permissions '){
 	   steps{
@@ -50,13 +60,7 @@ stages{
 	    
 	}
 	
-	stage('Run Tests'){
-	   steps{
-	       powershell script: '.\\buildscripts\\run_tests.ps1'
-	   }
-	   
-	    
-	}
+
 
 	
 
