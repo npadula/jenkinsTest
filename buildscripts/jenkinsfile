@@ -37,9 +37,9 @@ stages{
 	    
 	}
 	
-	stage('Stop IIS Site'){
+	stage('Deploy Site'){
 	   steps{
-	       powershell script: '.\\buildscripts\\remove_site.ps1'
+	       powershell script: '.\\buildscripts\\deploy_site.ps1'
 	   }
 	    
 	}
