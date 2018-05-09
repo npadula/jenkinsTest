@@ -46,19 +46,14 @@ stages{
 	
 
 	
-	stage('Assign IIS Permissions '){
+	stage('Configure'){
 	   steps{
-	       powershell script: '.\\buildscripts\\iis_permissions.ps1'
+	       powershell script: '.\\buildscripts\\configure.ps1'
 	   }
 	    
 	}
 	
-	stage('Start IIS Site'){
-	   steps{
-	       powershell script: '.\\buildscripts\\start_site.ps1'
-	   }
-	    
-	}
+
 	
 
 
