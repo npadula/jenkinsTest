@@ -1,7 +1,7 @@
 $DeployDir = "C:\Users\nicolas.padula\Desktop\JenkinsTestDeploy"
 $currentDir = Convert-Path .
 $buildDir = "$($currentDir)\build"
-$csProjFile = "$(currentDir)\JenkinsTst\JenkinsTest.csproj"
+$csProjFile = "$($currentDir)\JenkinsTst\JenkinsTest.csproj"
 
 
 Write-Output "Running dotnet publish..."
