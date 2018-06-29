@@ -3,6 +3,9 @@ agent any
 triggers { pollSCM('*/5 * * * *') }
 stages{
       
+	  
+	  notifyStarted()
+	  
     stage('Fetch'){
 		steps{
         checkout([$class: 'GitSCM', branches: [[name: '*/master']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: 'a65bd883-dc29-4cbd-9d92-2d7265ca5b41', url: 'https://github.com/npadula/jenkinsTest']]])
@@ -92,3 +95,22 @@ stages{
     }
 }
 }
+
+
+
+def notifyStarted() {
+  // send to Slack
+ // slackSend (color: '#FFFF00', message: "STARTED: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.BUILD_URL})")
+ 
+  // send to HipChat
+  //hipchatSend (color: 'YELLOW', notify: true,
+    //  message: "STARTED: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.BUILD_URL})"
+    //)
+ 
+  // send to email
+  emailext (
+      subject: "STARTED: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]'",
+      body: """<p>STARTED: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]':</p>
+        <p>Check console output at "<a href="${env.BUILD_URL}">${env.JOB_NAME} [${env.BUILD_NUMBER}]</a>"</p>""",
+      recipientProviders: [[$class: 'DevelopersRecipientProvider']]
+    )
