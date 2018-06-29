@@ -4,9 +4,13 @@ triggers { pollSCM('*/5 * * * *') }
 stages{
       
 	  
-	  notifyStarted()
+	  
 	  
     stage('Fetch'){
+		steps{
+			notifyStarted()
+		}
+		
 		steps{
         checkout([$class: 'GitSCM', branches: [[name: '*/master']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: 'a65bd883-dc29-4cbd-9d92-2d7265ca5b41', url: 'https://github.com/npadula/jenkinsTest']]])
 		}
